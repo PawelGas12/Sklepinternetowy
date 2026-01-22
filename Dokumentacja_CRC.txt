@@ -1,0 +1,132 @@
+================================================================================
+                        DOKUMENTACJA PROJEKTU: SYSTEM SKLEPU
+                              DIAGRAMY CRC (KARTY)
+================================================================================
+
+--------------------------------------------------------------------------------
+1. Klasa: Sklep
+--------------------------------------------------------------------------------
+ODPOWIEDZIALNOŚĆ (Co robi?):
+- Jest głównym kontenerem (fasadą) dla całego systemu.
+- Przechowuje nazwę sklepu.
+- Inicjuje i przechowuje dział asortymentu (produkty).
+- Inicjuje i przechowuje dział kadr (zespół pracowniczy).
+- Odpowiada za serializację (zapis) stanu sklepu do pliku XML.
+- Odpowiada za deserializację (odczyt) stanu sklepu z pliku XML.
+
+WSPÓŁPRACOWNICY (Z kim współpracuje?):
+- AsortymentSklepu
+- ZespolPracowniczy
+
+--------------------------------------------------------------------------------
+2. Klasa: AsortymentSklepu
+--------------------------------------------------------------------------------
+ODPOWIEDZIALNOŚĆ:
+- Przechowuje kolekcję wszystkich produktów w sklepie (Słownik: kod -> produkt).
+- Umożliwia dodawanie nowych produktów (waliduje unikalność kodu).
+- Umożliwia usuwanie produktów (po kodzie lub referencji do obiektu).
+- Pozwala na wyszukiwanie produktu po kodzie.
+- Pozwala na wyszukiwanie produktu po nazwie.
+- Udostępnia listę wszystkich produktów (np. do wyświetlenia w GUI).
+
+WSPÓŁPRACOWNICY:
+- Produkt
+
+--------------------------------------------------------------------------------
+3. Klasa: ZespolPracowniczy
+--------------------------------------------------------------------------------
+ODPOWIEDZIALNOŚĆ:
+- Przechowuje listę zatrudnionych pracowników.
+- Przechowuje referencję do aktualnego Kierownika.
+- Umożliwia dodawanie pracownika (waliduje unikalność numeru PESEL).
+- Umożliwia usuwanie pracownika z listy.
+- Blokuje próbę dodania Kierownika do listy zwykłych pracowników.
+- Oblicza łączne miesięczne koszty wypłat (Suma wypłat pracowników + Kierownika).
+
+WSPÓŁPRACOWNICY:
+- Pracownik
+- Kierownik
+
+--------------------------------------------------------------------------------
+4. Klasa: Produkt
+--------------------------------------------------------------------------------
+ODPOWIEDZIALNOŚĆ:
+- Reprezentuje pojedynczy towar handlowy (Nazwa, Cena).
+- Oblicza cenę finalną po uwzględnieniu rabatu klienta.
+- Implementuje logikę klonowania obiektu (tworzenie kopii).
+- Implementuje interfejs opisowy (zwraca sformatowany tekst o produkcie).
+
+WSPÓŁPRACOWNICY:
+- Klient / StalyKlient (używany do naliczenia rabatu)
+- Interfejs ICloneable
+- Interfejs IOpisowy
+
+--------------------------------------------------------------------------------
+5. Klasa: Osoba (Klasa Abstrakcyjna)
+--------------------------------------------------------------------------------
+ODPOWIEDZIALNOŚĆ:
+- Jest klasą bazową dla wszystkich ludzi w systemie.
+- Przechowuje wspólne dane: Imię, Nazwisko, Data Urodzenia, PESEL, Płeć.
+- Waliduje poprawność numeru PESEL (długość, cyfry).
+- Automatycznie rozszyfrowuje datę urodzenia i płeć na podstawie PESEL.
+- Oblicza bieżący wiek osoby.
+
+WSPÓŁPRACOWNICY:
+- Brak (klasa samodzielna)
+
+--------------------------------------------------------------------------------
+6. Klasa: Pracownik (Dziedziczy po: Osoba)
+--------------------------------------------------------------------------------
+ODPOWIEDZIALNOŚĆ:
+- Rozszerza Osobę o dane zatrudnienia: Stawka godzinowa, Liczba godzin, Data zatrudnienia.
+- Oblicza miesięczną wypłatę (Stawka * Godziny).
+- Oblicza staż pracy w latach.
+- Implementuje logikę porównywania z innym pracownikiem (sortowanie domyślne: Nazwisko, potem Imię).
+- Sprawdza tożsamość z innym pracownikiem (na podstawie PESEL).
+
+WSPÓŁPRACOWNICY:
+- Interfejs IComparable<Pracownik>
+- Interfejs IEquatable<Pracownik>
+
+--------------------------------------------------------------------------------
+7. Klasa: Kierownik (Dziedziczy po: Pracownik)
+--------------------------------------------------------------------------------
+ODPOWIEDZIALNOŚĆ:
+- Rozszerza Pracownika o dodatek finansowy (Premia).
+- Nadpisuje metodę obliczania wypłaty (Podstawa + Premia).
+
+WSPÓŁPRACOWNICY:
+- Brak dodatkowych (korzysta z logiki Pracownika)
+
+--------------------------------------------------------------------------------
+8. Klasa: Klient / StalyKlient (Dziedziczy po: Osoba)
+--------------------------------------------------------------------------------
+ODPOWIEDZIALNOŚĆ:
+- Przechowuje sumę pieniędzy wydanych w sklepie.
+- StalyKlient dodatkowo przechowuje punkty lojalnościowe.
+- Realizuje operację "Kup" (zwiększa wydatki, nalicza punkty).
+
+WSPÓŁPRACOWNICY:
+- Produkt (jest kupowany)
+
+================================================================================
+                          STRUKTURA RELACJI (OPIS UML)
+================================================================================
+
+1. KOMPOZYCJA (Składa się z):
+   - Obiekt `Sklep` jest właścicielem obiektów `AsortymentSklepu` oraz `ZespolPracowniczy`.
+     Gdy Sklep przestaje istnieć, te działy również.
+
+2. AGREGACJA (Zawiera):
+   - `AsortymentSklepu` zawiera kolekcję obiektów `Produkt`.
+   - `ZespolPracowniczy` zawiera kolekcję obiektów `Pracownik` oraz `Kierownik`.
+
+3. DZIEDZICZENIE (Jest rodzajem):
+   - `Pracownik` dziedziczy po klasie `Osoba`.
+   - `Klient` dziedziczy po klasie `Osoba`.
+   - `Kierownik` dziedziczy po klasie `Pracownik`.
+   - `StalyKlient` dziedziczy po klasie `Klient`.
+
+4. REALIZACJA INTERFEJSU:
+   - `Produkt` implementuje `ICloneable` oraz `IOpisowy`.
+   - `Pracownik` implementuje `IComparable` oraz `IEquatable`.

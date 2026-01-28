@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sklepinternetowy", "Sklepin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testy", "Testy\Testy.csproj", "{2D057B4E-992F-45BE-B10D-D3B920755209}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SklepGUI", "SklepGUI\SklepGUI\SklepGUI.csproj", "{F7D773FD-3705-6326-4E72-B49D0B38CB9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2D057B4E-992F-45BE-B10D-D3B920755209}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D057B4E-992F-45BE-B10D-D3B920755209}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D057B4E-992F-45BE-B10D-D3B920755209}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7D773FD-3705-6326-4E72-B49D0B38CB9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7D773FD-3705-6326-4E72-B49D0B38CB9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7D773FD-3705-6326-4E72-B49D0B38CB9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7D773FD-3705-6326-4E72-B49D0B38CB9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

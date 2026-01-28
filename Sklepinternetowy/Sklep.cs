@@ -1,91 +1,91 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Xml;
 
-namespace Sklepinternetowy
-{
-    [DataContract]
-    public class Sklep
+    namespace Sklepinternetowy
     {
-        [DataMember]
-        private string nazwa;
-
-        [DataMember]
-        private AsortymentSklepu asortyment;
-
-        [DataMember]
-        private ZespolPracowniczy personel;
-
-        public string Nazwa
+        [DataContract]
+        public class Sklep
         {
-            get => nazwa;
-            set => nazwa = value;
-        }
+            [DataMember]
+            private string nazwa;
 
-        public AsortymentSklepu Asortyment
-        {
-            get => asortyment;
-            set => asortyment = value;
-        }
+            [DataMember]
+            private AsortymentSklepu asortyment;
 
-        public ZespolPracowniczy Personel
-        {
-            get => personel;
-            set => personel = value;
-        }
+            [DataMember]
+            private ZespolPracowniczy personel;
 
-        public Sklep()
-        {
-            nazwa = "Nowy Sklep";
-            asortyment = new AsortymentSklepu();
-            personel = new ZespolPracowniczy();
-        }
-
-        public Sklep(string nazwa)
-        {
-            this.nazwa = nazwa;
-            this.asortyment = new AsortymentSklepu();
-            this.personel = new ZespolPracowniczy();
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("========================================");
-            sb.AppendLine($"         SKLEP: {Nazwa.ToUpper()}");
-            sb.AppendLine("========================================");
-            sb.AppendLine();
-
-            sb.AppendLine(Personel.ToString());
-            sb.AppendLine();
-            sb.AppendLine(Asortyment.ToString());
-
-            sb.AppendLine("========================================");
-            return sb.ToString();
-        }
-
-        public static Sklep? ReadDCXML(string name)
-        {
-            if (!File.Exists(name)) return null;
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Sklep));
-            using (XmlReader reader = XmlReader.Create(name))
+            public string Nazwa
             {
-                return (Sklep)serializer.ReadObject(reader);
+                get => nazwa;
+                set => nazwa = value;
             }
-        }
+
+            public AsortymentSklepu Asortyment
+            {
+                get => asortyment;
+                set => asortyment = value;
+            }
+
+            public ZespolPracowniczy Personel
+            {
+                get => personel;
+                set => personel = value;
+            }
+
+            public Sklep()
+            {
+                nazwa = "Nowy Sklep";
+                asortyment = new AsortymentSklepu();
+                personel = new ZespolPracowniczy();
+            }
+
+            public Sklep(string nazwa)
+            {
+                this.nazwa = nazwa;
+                this.asortyment = new AsortymentSklepu();
+                this.personel = new ZespolPracowniczy();
+            }
+
+            public override string ToString()
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("========================================");
+                sb.AppendLine($"         SKLEP: {Nazwa.ToUpper()}");
+                sb.AppendLine("========================================");
+                sb.AppendLine();
+
+                sb.AppendLine(Personel.ToString());
+                sb.AppendLine();
+                sb.AppendLine(Asortyment.ToString());
+
+                sb.AppendLine("========================================");
+                return sb.ToString();
+            }
+
+            public static Sklep? ReadDCXML(string name)
+            {
+                if (!File.Exists(name)) return null;
+                DataContractSerializer serializer = new DataContractSerializer(typeof(Sklep));
+                using (XmlReader reader = XmlReader.Create(name))
+                {
+                    return (Sklep)serializer.ReadObject(reader);
+                }
+            }
         
 
-        public void SaveToDCXML(string fname)
-        {
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Sklep));
-            using (XmlWriter wrtier = XmlWriter.Create(fname))
+            public void SaveToDCXML(string fname)
             {
-                serializer.WriteObject(wrtier, this);
+                DataContractSerializer serializer = new DataContractSerializer(typeof(Sklep));
+                using (XmlWriter wrtier = XmlWriter.Create(fname))
+                {
+                    serializer.WriteObject(wrtier, this);
+                }
             }
         }
     }
-}

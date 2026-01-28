@@ -49,7 +49,7 @@ namespace SklepGUI
             ProduktWindow okno = new ProduktWindow();
             if (okno.ShowDialog() == true)
             {
-                string kod = "P" + new Random().Next(10000, 99999);
+                string kod = "P" + new Random().Next(1000, 9999);
                 try
                 {
                     sklep.Asortyment.DodajProdukt(kod, okno.NowyProdukt);
@@ -132,7 +132,7 @@ namespace SklepGUI
                 {
                     Produkt kopia = (Produkt)zaznaczony.Clone();
                     kopia.Nazwa += " (KOPIA)";
-                    string kod = "P" + new Random().Next(100000, 999999);
+                    string kod = "P" + new Random().Next(10000, 99999);
                     try
                     {
                         sklep.Asortyment.DodajProdukt(kod, kopia);

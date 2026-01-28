@@ -40,6 +40,18 @@ namespace SklepGUI
                     return;
                 }
 
+                if (godziny < 0)
+                {
+                    MessageBox.Show("Liczba godzin nie może być ujemna!", "Błąd danych", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (stawka < 0)
+                {
+                    MessageBox.Show("Stawka godzinowa nie może być ujemna!", "Błąd danych", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 NowyPracownik = new Pracownik(imie, nazwisko, null, pesel, EnumPlec.X, stawka, godziny, DateTime.Now);
 
                 DialogResult = true;

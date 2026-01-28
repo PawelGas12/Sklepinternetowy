@@ -26,20 +26,27 @@ namespace SklepGUI
 
         private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNazwa.Text))
+            try
             {
-                MessageBox.Show("Podaj nazwę produktu.");
-                return;
-            }
+                if (string.IsNullOrWhiteSpace(txtNazwa.Text))
+                {
+                    MessageBox.Show("Podaj nazwę produktu.");
+                    return;
+                }
 
-            if (decimal.TryParse(txtCena.Text, out decimal cena))
-            {
-                NowyProdukt = new Produkt(txtNazwa.Text, cena);
-                DialogResult = true;
+                if (decimal.TryParse(txtCena.Text, out decimal cena))
+                {
+                    NowyProdukt = new Produkt(txtNazwa.Text, cena);
+                    DialogResult = true;
+                }
+                else
+                {
+                    MessageBox.Show("Podaj poprawną cenę (liczba).");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Podaj poprawną cenę (liczba).");
+                MessageBox.Show($"Błąd tworzenia produktu: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }
